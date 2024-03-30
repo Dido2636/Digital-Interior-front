@@ -139,7 +139,13 @@ h1 {
 }
 /* -----------DECORATOR-LOGIN/REGISTER------------- */
 
-.container{
+.container-form{
+  display: flex;
+  justify-content: center;
+}
+
+
+.container-grid{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;

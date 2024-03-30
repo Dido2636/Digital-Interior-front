@@ -3,12 +3,16 @@ import MediaUpload from "../components/MediaUpload"
 
 
 function SpaceDecorator() {
+  const decoratorData = JSON.parse(sessionStorage.getItem("decorator"));
+  const userData = JSON.parse(sessionStorage.getItem("user"));
   return (
     <>
       <main>
-    
         <section>
-          <MediaUpload/>
+          
+      {userData || decoratorData ? (
+        <MediaUpload/>
+      ): null}
          
         </section>
       </main>
