@@ -14,14 +14,16 @@ function Navbar() {
   return (
     <section className="Navbar">
       <Link to="/" className="home-link">
-        <h1 className="title">INTERIOR DIGITAL</h1>
+        <div className="box-title">
+          <h1 className="title">INTERIOR DIGITAL</h1>
+        </div>
       </Link>
 
       {userData && (
         <div className="box-login">
-          <p>Bienvenue {userData.user.firstname}, sur votre espace déco.</p>
+          <p className="name-login">Bienvenue {userData.user.firstname}, </p>
           <Link to="/users/espace-deco" className="home-link">
-            Votre espace deco
+            Espace deco
           </Link>
           <button onClick={handleLogout}>Déconnexion</button>
         </div>
@@ -29,9 +31,11 @@ function Navbar() {
 
       {decoratorData && (
         <div className="box-login">
-          <p>Bienvenue {decoratorData.user.firstname}, sur votre espace de création.</p>
+          <p className="name-login" >
+            Bienvenue {decoratorData.user.firstname}, 
+          </p>
           <Link to="/decorators/espace-creation" className="home-link">
-            Votre espace de création
+          Espace création
           </Link>
           <button onClick={handleLogout}>Déconnexion</button>
         </div>
@@ -39,6 +43,9 @@ function Navbar() {
 
       {!userData && !decoratorData && (
         <div className="box-login">
+          <Link to="/contact" className="home-link">
+            CONTACT
+          </Link>
           <Link to="/users/login" className="home-link">
             CLIENT
           </Link>
@@ -52,5 +59,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-

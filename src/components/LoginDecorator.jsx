@@ -40,14 +40,14 @@ function LoginDecorator() {
         <input
           className="input-field"
           type="email"
-          placeholder="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
         <input
           className="input-field"
           type="text"
-          placeholder="entrez votre mot de passe"
+          placeholder="Entrez votre mot de passe"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></input>
@@ -56,9 +56,9 @@ function LoginDecorator() {
           connexion
         </button>
         <div className="inscrivez-vous">
-          <p className="small-text">Vous n'avez pas de compte ?</p>
+          <p className="small-text">Vous n'avez pas encore de compte ?</p>
           <Link to="/decorators/register">
-            <button className="btn-login">Inscrivez-vous</button>
+            <button className="btn-login">Inscrivez-vous !</button>
           </Link>
         </div>
       </form>

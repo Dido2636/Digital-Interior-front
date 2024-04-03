@@ -8,7 +8,7 @@ function SpaceDecorator() {
   return (
     <>
       <main>
-        <section>
+        <section className="espace-deco">
           
       {userData || decoratorData ? (
         <MediaUpload/>
