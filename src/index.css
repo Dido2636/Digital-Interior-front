@@ -55,7 +55,7 @@
   .box-login {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 29px;
     justify-content: center;
     align-items: end;
   }
@@ -142,6 +142,12 @@
     gap: 7px;
   }
 
+  .btn-deconnexion {
+    font-size: 30px;
+    background: none;
+    border: none;
+  }
+
   /* -----------DECORATOR-LOGIN/REGISTER------------- */
 
   .decorator-page {
@@ -154,7 +160,7 @@
     height: 575px;
   }
   /* -----------ESPACE-DECO------------ */
-  .espace-deco{
+  .espace-deco {
     background-color: white;
   }
   .name-login {
@@ -166,64 +172,98 @@
     align-items: center;
   }
 
-  .card-title{
+  .card-title {
     color: white;
   }
 
-  .card-description{
+  .card-description {
     color: white;
   }
 
-  .box-infos{
-    width: 350px;
+  .box-infos {
+    width: 357px;
     height: 73px;
+    padding: 2%;
+    border-radius: 0px 0px 10px 10px;
     transform: translateY(-73px);
     margin-bottom: -112px;
     background: rgb(0, 0, 0, 0.6);
+    z-index: -1;
   }
 
+  .card {
+    width: 356px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
 
-.card {
-  width: 356px;
-  display: flex;
-  flex-direction: column;
-  margin-top: 50px;
-}
+  .img-card {
+    width: 357px;
+    height: 348px;
+    border-radius: 10px;
+    box-shadow: -2px 6px 14px 1px rgba(0, 0, 0, 0.2);
+  }
 
-.img-card {
-  width: 350px;
-  height: 348px;
-}
+  .btn-view {
+    width: 83px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    margin-left: auto;
+    background-color: black;
+    z-index: 1;
+    transform: translateY(-8px);
+    margin-right: 10px;
+  }
 
-.btn-view {
-  margin-left: auto;
-}
+  .box-update {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    transform: translateY(46px);
+  }
 
-.box-update {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
+  .box-second {
+    display: flex;
+  }
 
-.box-second {
-  display: flex;
-}
+  .update-title {
+    display: flex;
+  }
 
-.update-title {
-  display: flex;
-}
+  .update-description {
+    display: flex;
+  }
 
-.update-description {
-  display: flex;
-}
+  .btn-delete {
+    height: 25px;
+    width: 66px;
+    margin-left: auto;
+  }
 
-.btn-delete {
-  height: 25px;
-  width: 66px;
-  margin-left: auto;
-}
+  .link-card {
+    text-decoration: none;
+  }
 
+  .box-btn-view-details {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 5px;
+  }
+
+  .btn-view-details {
+    width: 200px;
+    height: 40px;
+    background: black;
+    border-radius: 10px;
+    border: none;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -297,6 +337,7 @@
 .footer {
   bottom: auto;
   color: #f4f0f0;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;

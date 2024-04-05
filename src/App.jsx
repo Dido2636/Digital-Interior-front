@@ -8,8 +8,9 @@ import LoginUserPage from "./pages/LoginUserPage";
 import DecoratorLoginPage from "./pages/DecoratorLoginPage";
 import RegisterUserPage from "./pages/RegisterUserPage";
 import Contact from "./pages/Contact";
-import Footer from "./components/Footer";
-import ProjectPage from "./pages/ProjectPage";
+import MediaDetailsPage from "./pages/MediaDetailsPage";
+
+
 
 function App() {
   return (
@@ -30,14 +31,16 @@ function App() {
             path="/decorators/espace-creation"
             element={<SpaceDecorator />}
           />
+           
            <Route
-            path="/decorators/espace-creation/:id"
-            element={<ProjectPage />}
+            path="/decorators/espace-creation/:mediaId"
+            element={<MediaDetailsPage />} 
           />
+           
           
           <Route path="/users/espace-deco" element={<UserSpacePage />} />
         </Routes>
-        <Footer />
+    
       </Router>
     </>
   );

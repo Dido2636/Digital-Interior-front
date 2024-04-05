@@ -1,14 +1,12 @@
 import React from "react";
 
-function Card({ mediaType, title, description, viewUrl }) {
+function Card({ mediaType, title, description }) {
   return (
     <>
-      <img className="card-img" src={mediaType} />
+      <img className="img-card" src={`http://localhost:6789/${mediaType}`} />
+<div className="box-infos"> 
       <h4 className="card-title">{title}</h4>
-      <p className="card-description">{description}</p>
-      <button href={viewUrl} className="btn-view">
-        View 360°
-      </button>
+      <p className="card-description">{description}</p></div>
     </>
   );
 }

@@ -8,7 +8,7 @@ function Navbar() {
   const handleLogout = async () => {
     sessionStorage.removeItem("decorator");
     sessionStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -22,10 +22,10 @@ function Navbar() {
       {userData && (
         <div className="box-login">
           <p className="name-login">Bienvenue {userData.user.firstname}, </p>
-          <Link to="/users/espace-deco" className="home-link">
+          <Link to="/decorators/espace-creation" className="home-link">
             Espace deco
           </Link>
-          <button onClick={handleLogout}>Déconnexion</button>
+          <button className="btn-deconnexion" onClick={handleLogout}>X</button>
         </div>
       )}
 
@@ -37,7 +37,7 @@ function Navbar() {
           <Link to="/decorators/espace-creation" className="home-link">
           Espace création
           </Link>
-          <button onClick={handleLogout}>Déconnexion</button>
+          <button onClick={handleLogout}>X</button>
         </div>
       )}
 

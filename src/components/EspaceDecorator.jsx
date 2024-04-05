@@ -1,5 +1,8 @@
 import React from "react";
 import MediaUpload from "../components/MediaUpload"
+import Footer from "../components/Footer"
+
+
 
 
 function SpaceDecorator() {
@@ -12,9 +15,11 @@ function SpaceDecorator() {
           
       {userData || decoratorData ? (
         <MediaUpload/>
+      
       ): null}
          
         </section>
+        <Footer />
       </main>
     </>
   );
