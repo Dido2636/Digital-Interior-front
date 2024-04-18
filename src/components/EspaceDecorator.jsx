@@ -5,7 +5,7 @@ import Footer from "../components/Footer"
 
 
 
-function SpaceDecorator() {
+function EspaceDecorator() {
   const decoratorData = JSON.parse(sessionStorage.getItem("decorator"));
   const userData = JSON.parse(sessionStorage.getItem("user"));
   return (
@@ -19,10 +19,10 @@ function SpaceDecorator() {
       ): null}
          
         </section>
-        <Footer />
+       
       </main>
     </>
   );
 }
 
-export default SpaceDecorator;
+export default EspaceDecorator;

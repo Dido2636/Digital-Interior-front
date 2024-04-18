@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
-import Footer from "../components/Footer";
+
 
 function HomePage() {
   const { currentUser } = useAuth();
@@ -20,7 +20,7 @@ function HomePage() {
         </section>
 
        
-        <Footer />
+        
       </main>
     </div>
   );

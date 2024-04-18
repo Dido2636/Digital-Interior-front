@@ -3,10 +3,13 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { FaEyeSlash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 function LoginDecorator() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,14 +30,17 @@ function LoginDecorator() {
       sessionStorage.setItem("token", JSON.stringify(response.data.token));
       console.log("Decorator connecté : ", decodeUser);
 
-      navigate("/decorators/espace-creation");
+      navigate("/espace-deco");
     } catch (error) {
       console.error("Erreur de connexion", error.message);
     }
   };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <div>
-      
       <form onSubmit={handleSubmit} className="form-user">
         <h2 className="medium-title">Connectez-vous</h2>
         <input
@@ -43,14 +49,19 @@ function LoginDecorator() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        ></input>
-        <input
-          className="input-field"
-          type="text"
-          placeholder="Entrez votre mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
+        />
+        <div>
+          <input
+            className="input-field"
+            type={showPassword ? "text" : "password"}
+            placeholder="Entrez votre mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <a className="eyes-password" onClick={toggleShowPassword}>
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
+          </a>
+        </div>
 
         <button className="btn-login" type="submit">
           connexion

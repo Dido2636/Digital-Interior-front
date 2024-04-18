@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { CiLogout } from "react-icons/ci";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -19,37 +20,41 @@ function Navbar() {
         </div>
       </Link>
 
-      {userData && (
+      {userData  && (
         <div className="box-login">
-          <p className="name-login">Bienvenue {userData.user.firstname}, </p>
-          <Link to="/decorators/espace-creation" className="home-link">
+          <div className="name-login-one">
+            <p className="name-login">Bienvenue {userData.userData.firstname}, </p>
+          </div>
+          <Link to="/espace-deco" className="home-link">
             Espace deco
           </Link>
-          <button className="btn-deconnexion" onClick={handleLogout}>X</button>
+          <button className="btn-deco" onClick={handleLogout}>
+            <CiLogout />
+          </button>
         </div>
       )}
 
-      {decoratorData && (
+      {decoratorData  && (
         <div className="box-login">
-          <p className="name-login" >
-            Bienvenue {decoratorData.user.firstname}, 
+          <p className="name-login">
+            Bienvenue {decoratorData.userData.firstname},
           </p>
-          <Link to="/decorators/espace-creation" className="home-link">
-          Espace création
+          <Link to="/espace-deco" className="home-link">
+            Espace création
           </Link>
-          <button onClick={handleLogout}>X</button>
+          <button className="btn-deco" onClick={handleLogout}>
+            <CiLogout className="btn-deconnexion" width={"500px"} />
+          </button>
         </div>
       )}
 
       {!userData && !decoratorData && (
         <div className="box-login">
-          <Link to="/contact" className="home-link">
-            CONTACT
-          </Link>
-          <Link to="/users/login" className="home-link">
+  
+          <Link to="/users/login" className="home-link-client">
             CLIENT
           </Link>
-          <Link to="/decorators/login" className="home-link">
+          <Link to="/decorators/login" className="home-link-decorator">
             DECORATEUR
           </Link>
         </div>

@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { FaEyeSlash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 function DecoratorForm() {
-  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
   const [newDecorator, setNewDecorator] = useState({
     company: "",
     firstname: "",
@@ -24,10 +28,16 @@ function DecoratorForm() {
         email: "",
         password: "",
       });
-      navigate("/decorators/login")
+      setMessage("Vous etes bien inscrit !")
+
     } catch (error) {
       console.error("Erreur");
+      setError("Un décorateur avec cette adresse e-mail existe déjà");
     }
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -73,19 +83,27 @@ function DecoratorForm() {
             setNewDecorator({ ...newDecorator, email: e.target.value })
           }
         />
-        <input
-          className="input-field"
-          type="text"
-          placeholder="Mot de passe"
-          value={newDecorator.password}
-          onChange={(e) =>
-            setNewDecorator({ ...newDecorator, password: e.target.value })
-          }
-        />
+
+        <div>
+          <input
+            className="input-field"
+            type={showPassword ? "text" : "password"}
+            placeholder="Entrez votre mot de passe"
+            value={newDecorator.password}
+            onChange={(e) =>
+              setNewDecorator({ ...newDecorator, password: e.target.value })
+            }
+          />
+          <a className="eyes-password" onClick={toggleShowPassword}>
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+          </a>
+        </div>
 
         <button type="submit" className="btn-login">
-          Enregistrer
+        M'inscrire
         </button>
+        {message && (<div className="text-register">{message}</div>)} 
         <div className="inscrivez-vous">
           <p className="small-text">Vous avez un compte !</p>
           <Link to="/decorators/login" className="home-link">

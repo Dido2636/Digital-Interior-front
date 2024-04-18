@@ -9,6 +9,7 @@ import DecoratorLoginPage from "./pages/DecoratorLoginPage";
 import RegisterUserPage from "./pages/RegisterUserPage";
 import Contact from "./pages/Contact";
 import MediaDetailsPage from "./pages/MediaDetailsPage";
+import Footer from "./components/Footer";
 
 
 
@@ -28,7 +29,7 @@ function App() {
             element={<DecoratorRegisterPage />}
           />
           <Route
-            path="/decorators/espace-creation"
+            path="/espace-deco"
             element={<SpaceDecorator />}
           />
            
@@ -40,6 +41,7 @@ function App() {
           
           <Route path="/users/espace-deco" element={<UserSpacePage />} />
         </Routes>
+        <Footer/>
     
       </Router>
     </>
