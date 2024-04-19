@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 
 
 
+
 function App() {
   return (
     <>
@@ -28,6 +29,7 @@ function App() {
             path="/decorators/register"
             element={<DecoratorRegisterPage />}
           />
+         
           <Route
             path="/espace-deco"
             element={<SpaceDecorator />}

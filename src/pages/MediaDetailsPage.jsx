@@ -19,7 +19,6 @@ function MediaDetailsPage() {
       const response = await axios.get("http://localhost:6789/media/allmedia");
       console.log(response.data);
       setSousDescription(response.data);
-      setCommentaire(response.data);
     } catch (error) {
       console.error("Error fetching media:", error);
     }
@@ -39,9 +38,20 @@ function MediaDetailsPage() {
 
   const updateMedia = async (mediaId, newData) => {
     try {
+      const token = JSON.parse(sessionStorage.getItem("token"));
+      console.log(token);
+      if (!token) {
+        throw new Error("Token not found");
+      }
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
       const response = await axios.put(
         `http://localhost:6789/media/update-media/${mediaId}`,
-        newData
+        newData,
+        config
       );
       console.log("Updated media:", response.data);
       getAllMedia();

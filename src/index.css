@@ -203,7 +203,7 @@ svg {
     padding-left: 10px;
   }
 
-  .input-field-upload::placeholder{
+  .input-field-upload::placeholder {
     color: black;
     padding-left: 10px;
   }
@@ -397,7 +397,7 @@ svg {
     width: 100%;
   }
 
-  textarea{
+  textarea {
     padding: 10px 0px 0px 10px;
     width: 80%;
     height: 45px;
@@ -405,7 +405,6 @@ svg {
     background: #bba89f;
     border-radius: 10px;
   }
-  
 
   .box-btn-view-details {
     width: 100%;
@@ -444,7 +443,7 @@ svg {
     border: none;
     border-radius: 10px;
     font-size: 13px;
-    background:  #bba89f;
+    background: #bba89f;
     color: white;
   }
 
@@ -839,6 +838,13 @@ svg {
 
   .btn-filter:active {
     background-color: #bba89f;
+  }
+
+  .name-comment {
+    font-size: 9px;
+  }
+  .content-comment {
+    font-size: 9px;
   }
 
   .btn-delete {
