@@ -50,11 +50,11 @@ function Footer() {
       </div>
 
       <div className="footer-four">
-        <h5 className="footer-explore">Menu</h5>
+        <h5 className="footer-explore-menu">Menu</h5>
         <div className="footer-about">
-          <Link to={""}>About</Link>
-          <Link to={"/users/login"}>Client</Link>
-          <Link to={"/decorator/login"}>Decorateur</Link>
+          <Link className="footer-explore" to={""}>About</Link>
+          <Link className="footer-explore" to={"/users/login"}>Client</Link>
+          <Link className="footer-explore" to={"/decorator/login"}>Decorateur</Link>
         </div>
       </div>
     </div>

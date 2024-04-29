@@ -5,22 +5,26 @@ import axios from "axios";
 function MediaDetailsPage() {
   const [media, setMedia] = useState([]);
   const [sousDescription, setSousDescription] = useState("");
+  const [comments, setComments] = useState([]);
+
   const { mediaId } = useParams();
 
   const decoratorData = JSON.parse(sessionStorage.getItem("decorator"));
 
   useEffect(() => {
     getOneMedia();
-    getAllMedia();
+    getAllComment();
   }, []);
 
-  const getAllMedia = async () => {
+  const getAllComment = async () => {
     try {
-      const response = await axios.get("http://localhost:6789/media/allmedia");
+      const response = await axios.get(
+        "http://localhost:6789/comment/allcomment"
+      );
       console.log(response.data);
-      setSousDescription(response.data);
+      setCommentaire(response.data);
     } catch (error) {
-      console.error("Error fetching media:", error);
+      console.error("Error fetching comment:", error);
     }
   };
 
@@ -102,6 +106,15 @@ function MediaDetailsPage() {
           ) : null}
 
           <p className="text-sousDescription">{media.sousDescription}</p>
+        </div>
+        <div className="comment-section">
+          <h2>Commentaires</h2>
+          {comments.map((comment) => (
+            <div key={comment._id} className="comment">
+              <p>{comment.commentaire}</p>
+              <p className="author">{comment.author}</p>
+            </div>
+          ))}
         </div>
         <div className="box-btn-view-details">
           {media.viewUrl && (

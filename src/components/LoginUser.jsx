@@ -27,7 +27,7 @@ function LoginUser() {
       sessionStorage.setItem("token", JSON.stringify(response.data.token));
       console.log("User connecté : ", decodeUser);
      
-      navigate("/espace-deco");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Erreur de connexion", error.message);
     }

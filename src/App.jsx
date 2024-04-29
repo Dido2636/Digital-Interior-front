@@ -10,9 +10,9 @@ import RegisterUserPage from "./pages/RegisterUserPage";
 import Contact from "./pages/Contact";
 import MediaDetailsPage from "./pages/MediaDetailsPage";
 import Footer from "./components/Footer";
-
-
-
+import Dashboard from "./pages/Dashboard";
+import ProjectDetails from "./components/ProjectDetails";
+const decorator = JSON.parse(sessionStorage.getItem("decorator"));
 
 function App() {
   return (
@@ -21,6 +21,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/dashboard/:id/projects" element={<Dashboard />} />
+          <Route path="/project/:id" element={<ProjectDetails />} />
+      
           <Route path="/contact" element={<Contact />} />
           <Route path="/users/login" element={<LoginUserPage />} />
           <Route path="/users/register" element={<RegisterUserPage />} />
@@ -51,3 +54,5 @@ function App() {
 }
 
 export default App;
+
+

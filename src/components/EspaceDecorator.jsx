@@ -1,6 +1,6 @@
 import React from "react";
 import MediaUpload from "../components/MediaUpload"
-import Footer from "../components/Footer"
+
 
 
 

@@ -1,10 +1,10 @@
-// A MODIFIER AVEC BON CSS
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Card from "./Card";
+import { IoIosSend } from "react-icons/io";
 
-function MediaUpload() {
+function MediaUpload({ projectId }) {
   const [selectedImage, setSelectedImage] = useState([]);
   const [selectedMediaId, setSelectedMediaId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
@@ -22,34 +22,46 @@ function MediaUpload() {
   const [allMedia, setAllMedia] = useState(null);
   const [modal, setModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [error, setError] = useState(null);
 
-  const userData = JSON.parse(sessionStorage.getItem("user"));
   const decoratorData = JSON.parse(sessionStorage.getItem("decorator"));
 
   useEffect(() => {
     getAllMedia();
-    getAllComment();
+    // getAllComment();
   }, []);
 
-  const getAllMedia = async () => {
-    try {
-      const response = await axios.get("http://localhost:6789/media/allmedia");
-      console.log(response.data);
-      const mediaData = response.data
-        .map((media) => ({
-          ...media,
-          createAt: new Date(media.createAt),
-        }))
-        .sort((a, b) => b.createAt - a.createAt);
+  // const getAllMedia = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:6789/media/allmedia");
+  //     console.log(response.data);
+  //     const mediaData = response.data
+  //       .map((media) => ({
+  //         ...media,
+  //         createAt: new Date(media.createAt),
+  //       }))
+  //       .sort((a, b) => b.createAt - a.createAt);
 
-      setAllMedia(mediaData);
-      setCommentaire(mediaData);
-      console.log(mediaData);
-      setOriginalMedia(mediaData); // Définir originalMedia après avoir défini allMedia
+  //     setAllMedia(mediaData);
+  //     setCommentaire(mediaData);
+  //     console.log(mediaData);
+  //     setOriginalMedia(mediaData); // Définir originalMedia après avoir défini allMedia
+  //   } catch (error) {
+  //     console.error("Error fetching media:", error);
+  //   }
+  // };
+
+  const getAllMedia = async () =>{
+    try {
+            const response = await axios.get(`http://localhost:6789/projects/${projectId}/all-media`);
+
+            setAllMedia(response)
+      
     } catch (error) {
-      console.error("Error fetching media:", error);
+      
     }
-  };
+  }
 
   const handleImageMedia = (e) => {
     console.log(e.target.files);
@@ -68,6 +80,17 @@ function MediaUpload() {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+
+    if (!title) {
+      setError("Veuillez ajouter une catégorie !");
+      return;
+    }
+
+    if (selectedImage.length === 0) {
+      setError("Veuillez ajouter un fichier !");
+      return;
+    }
+
     const formData = new FormData();
     for (const file of selectedImage) {
       formData.append("imageMedia", file);
@@ -76,20 +99,24 @@ function MediaUpload() {
     formData.append("description", description);
     formData.append("sousDescription", sousDescription);
     formData.append("viewUrl", viewUrl);
+
     console.log(selectedImage, title, description, viewUrl);
+
     try {
       const token = JSON.parse(sessionStorage.getItem("token"));
-      console.log(token);
+
       if (!token) {
-        throw new Error("Token not found");
+        throw new Error("Token non trouvé");
       }
+
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
+
       const response = await axios.post(
-        "http://localhost:6789/media/create-media",
+        `http://localhost:6789/projects/${projectId}/create-media`,
         formData,
         {
           headers: { ...config.headers, "Content-Type": "multipart/form-data" },
@@ -103,94 +130,86 @@ function MediaUpload() {
       } else {
         console.error("La réponse du serveur est incorrecte ou vide");
       }
+
       setTitle("");
       setDescription("");
       setSousDescription("");
       setViewUrl("");
 
       getAllMedia();
+      window.location.reload();
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Erreur lors du téléchargement de l'image :", error);
+      setError(
+        "Une erreur s'est produite lors de la création du média. Veuillez réessayer."
+      );
     }
   };
 
   // -----UPDATE-----///
 
-  // const updateMedia = async (mediaId, newData) => {
+  // const toggleModal = () => {
+  //   setModal(!modal);
+  // };
+
+  // const openUpdateModal = (media) => {
+  //   setSelectedMediaId(media._id);
+  //   setUpdateData({
+  //     title: media.title,
+  //     description: media.description,
+  //     viewUrl: media.viewUrl,
+  //   });
+  //   toggleModal();
+  // };
+
+  // const handleUpdateMedia = async (e) => {
+  //   e.preventDefault();
   //   try {
-  //     const response = await axios.put(
-  //       `http://localhost:6789/media/update-media/${mediaId}`,
-  //       newData
+  //     const token = JSON.parse(sessionStorage.getItem("token"));
+  //     console.log(token);
+  //     if (!token) {
+  //       throw new Error("Token not found");
+  //     }
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     };
+  //     await axios.put(
+  //       `http://localhost:6789/media/update-media/${selectedMediaId}`,
+  //       updateData,
+  //       config
   //     );
-  //     console.log("Updated media:", response.data);
+  //     toggleModal();
   //     getAllMedia();
   //   } catch (error) {
   //     console.error("Error updating media:", error);
   //   }
   // };
 
-  const toggleModal = () => {
-    setModal(!modal);
-  };
-
-  const openUpdateModal = (media) => {
-    setSelectedMediaId(media._id);
-    setUpdateData({
-      title: media.title,
-      description: media.description,
-      viewUrl: media.viewUrl,
-    });
-    toggleModal();
-  };
-
-  const handleUpdateMedia = async (e) => {
-    e.preventDefault();
-    try {
-      const token = JSON.parse(sessionStorage.getItem("token"));
-      console.log(token);
-      if (!token) {
-        throw new Error("Token not found");
-      }
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      await axios.put(
-        `http://localhost:6789/media/update-media/${selectedMediaId}`,
-        updateData,
-        config
-      );
-      toggleModal();
-      getAllMedia();
-    } catch (error) {
-      console.error("Error updating media:", error);
-    }
-  };
-
   //---DELETE-----//
-  const deleteMedia = async (mediaId) => {
-    try {
-      const token = JSON.parse(sessionStorage.getItem("token"));
-      console.log(token);
-      if (!token) {
-        throw new Error("Token not found");
-      }
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await axios.delete(
-        `http://localhost:6789/media/delete/${mediaId}`,
-        config
-      );
-      console.log(response.data);
-      getAllMedia();
-    } catch (error) {
-      console.error("Error fetching media:", error);
-    }
-  };
+  // const deleteMedia = async (mediaId) => {
+  //   try {
+  //     const token = JSON.parse(sessionStorage.getItem("token"));
+  //     console.log(token);
+  //     if (!token) {
+  //       throw new Error("Token not found");
+  //     }
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     };
+  //     const response = await axios.delete(
+  //       `http://localhost:6789/media/delete/${mediaId}`,
+  //       config
+  //     );
+  //     console.log(response.data);
+  //     getAllMedia();
+  //   } catch (error) {
+  //     console.error("Error fetching media:", error);
+  //   }
+  // };
 
   const toggleConfirmationModal = () => {
     setShowConfirmationModal(!showConfirmationModal);
@@ -208,57 +227,62 @@ function MediaUpload() {
 
   //---COMMENTAIRE---//
 
-  const getAllComment = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:6789/comment/allcomment"
-      );
-      console.log(response.data);
-      setCommentaire(response.data);
-    } catch (error) {
-      console.error("Error fetching comment:", error);
-    }
-  };
+  // const getAllComment = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       "http://localhost:6789/comment/allcomment"
+  //     );
+  //     console.log(response.data);
+  //     setCommentaire(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching comment:", error);
+  //   }
+  // };
 
-  const handleCommentaire = async (media, newCommentaire, author, createAt) => {
-    try {
-      const token = JSON.parse(sessionStorage.getItem("token"));
-      if (!token) {
-        throw new Error("Token not found");
-      }
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await axios.post(
-        `http://localhost:6789/media/${media}/comment`,
-        {
-          commentaire: newCommentaire,
-          author: author,
-          createAt,
-        },
-        config
-      );
+  // const handleCommentaire = async (media, newCommentaire, author, createAt) => {
+  //   try {
+  //     const token = JSON.parse(sessionStorage.getItem("token"));
+  //     if (!token) {
+  //       throw new Error("Token not found");
+  //     }
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     };
+  //     const response = await axios.post(
+  //       `http://localhost:6789/media/${media}/comment`,
+  //       {
+  //         commentaire: newCommentaire,
+  //         author: author,
+  //         createAt,
+  //       },
+  //       config
+  //     );
 
-      console.log("Commentaire ajouté à :", response.data);
-      getAllMedia();
-      setCommentaire("");
-    } catch (error) {
-      // Gérer les erreurs en conséquence
-    }
-  };
+  //     console.log("Commentaire ajouté à :", response.data);
+  //     setCommentaire("");
+  //     getAllMedia();
+  //   } catch (error) {
+  //     // Gérer les erreurs en conséquence
+  //   }
+  // };
 
-  const deleteComment = async (media, comment) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:6789/media/${media}/delete-comment/${comment}`
-      );
-      console.log(response.data);
-      getAllMedia();
-    } catch (error) {
-      console.error("Error fetching media:", error);
-    }
+  // const deleteComment = async (media, comment) => {
+  //   try {
+  //     const response = await axios.delete(
+  //       `http://localhost:6789/media/${media}/delete-comment/${comment}`
+  //     );
+  //     console.log(response.data);
+  //     getAllMedia();
+  //   } catch (error) {
+  //     console.error("Error fetching media:", error);
+  //   }
+  // };
+
+  const toggleComments = (mediaId) => {
+    setSelectedMediaId(selectedMediaId === mediaId ? null : mediaId);
+    setShowComments(selectedMediaId === mediaId ? !showComments : true);
   };
 
   ///----Filter----///
@@ -276,6 +300,7 @@ function MediaUpload() {
 
   return (
     <>
+    <p>Media Upload for Project ID: {projectId}</p>
       <div className="container-form">
         {decoratorData ? (
           <form
@@ -289,11 +314,12 @@ function MediaUpload() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             >
-              <option value="">Choisissez une option</option>
+              <option value="">Choisissez une categorie*</option>
               <option value="3D">3D</option>
               <option value="IMAGE">IMAGE</option>
               <option value="PLAN">PLAN</option>
             </select>
+
             <input
               className="input-field-upload"
               type="text"
@@ -326,6 +352,7 @@ function MediaUpload() {
             <button className="btn-fichier" type="submit">
               Poster fichier
             </button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
           </form>
         ) : null}
       </div>
@@ -373,6 +400,8 @@ function MediaUpload() {
                       title={media.title}
                       description={media.description}
                     />
+                  </div>
+                </Link>
                     {media.viewUrl && (
                       <button
                         className="btn-view"
@@ -383,50 +412,67 @@ function MediaUpload() {
                         View 360°
                       </button>
                     )}
-                  </div>
-                </Link>
-                <div className="comment-list">
-                  {media.commentaire.map((comment) => (
-                    <div key={comment._id}>
-                      <div className="box-one-comment">
-                        <p
-                          className="name-comment"
-                          style={{ fontSize: "10px", fontStyle: "italic" }}
-                        >
-                          {comment.author} :{" "}
-                        </p>
-                        <p
-                          className="content-comment"
-                          style={{ fontSize: "9px", fontStyle: "italic" }}
-                        >
-                          {comment.commentaire}
-                        </p> 
-                        <br />
-                        <br />
-                        <br />
-                        <p style={{ fontSize: "9px", fontStyle: "italic" }}>Crér à :{comment.createAt}</p>
-                        <button
-                          style={{ fontSize: "9px" }}
-                          onClick={() => deleteComment(media._id, comment._id)}
-                        >
-                          x
-                        </button>
-                      </div>
+
+                {media._id === selectedMediaId && (
+                  <>
+                    <div className="comment-form">
+                      <input
+                        type="text"
+                        className="input-comment"
+                        placeholder="Laissez un Commentaire"
+                        onChange={(e) => setCommentaire(e.target.value)}
+                      />
+                      <button
+                        className="btn-delete"
+                        onClick={() =>
+                          handleCommentaire(media._id, commentaire)
+                        }
+                      >
+                        <IoIosSend />
+                      </button>
                     </div>
-                  ))}
-                </div>
-                <div className="comment-form">
-                  <input
-                    type="text"
-                    className="input-comment"
-                    placeholder="Laissez un Commentaire"
-                    onChange={(e) => setCommentaire(e.target.value)}
-                  />
+                    {media.commentaire.map((comment) => (
+                      <div key={comment._id} className="box-one-comment">
+                        <div className="box-comment-content">
+                          <p className="name-comment">{comment.author} : </p>
+                          <p className="content-comment">
+                            {comment.commentaire}
+                          </p>
+                        </div>
+
+                        <div className="box-createAt">
+                          <p className="createAt">
+                            postée le :{" "}
+                            {new Date(comment.createAt).toLocaleDateString(
+                              "fr-FR"
+                            )}
+                          </p>
+                          <button
+                            className="delete-comment"
+                            onClick={() =>
+                              deleteComment(media._id, comment._id)
+                            }
+                          >
+                            x
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
+
+                <div className="comment-list">
                   <button
-                    className="btn-delete"
-                    onClick={() => handleCommentaire(media._id, commentaire)}
+                    className={`modal-comment ${
+                      selectedMediaId === media._id && showComments
+                        ? "black-bg"
+                        : "gray-bg"
+                    }`}
+                    onClick={() => toggleComments(media._id)}
                   >
-                    Commentez
+                    {selectedMediaId === media._id && showComments
+                      ? "x"
+                      : "Voir les commentaires"}
                   </button>
                 </div>
 
@@ -438,28 +484,33 @@ function MediaUpload() {
                     >
                       Update
                     </button>
+
                     {modal && selectedMediaId === media._id && (
                       <div className="modal-content">
                         <form
                           className="form-update"
                           onSubmit={handleUpdateMedia}
                         >
-                          <input
-                            type="text"
+                          <select
                             className="input-update"
-                            placeholder="New Title"
-                            value={updateData.title}
+                            placeholder="Choix"
+                            value={title}
                             onChange={(e) =>
                               setUpdateData({
                                 ...updateData,
                                 title: e.target.value,
                               })
                             }
-                          />
+                          >
+                            <option value="">Choisissez une categorie</option>
+                            <option value="3D">3D</option>
+                            <option value="IMAGE">IMAGE</option>
+                            <option value="PLAN">PLAN</option>
+                          </select>
                           <input
                             type="text"
                             className="input-update"
-                            placeholder="New Description"
+                            placeholder="title"
                             value={updateData.description}
                             onChange={(e) =>
                               setUpdateData({
@@ -487,6 +538,7 @@ function MediaUpload() {
                         </form>
                       </div>
                     )}
+
                     {showConfirmationModal && selectedMediaId === media._id && (
                       <div className="confirmation-modal">
                         <p>Voulez-vous vraiment supprimer ce post ?</p>

@@ -3,8 +3,8 @@ import { CiLogout } from "react-icons/ci";
 
 function Navbar() {
   const navigate = useNavigate();
-  const userData = JSON.parse(sessionStorage.getItem("user"));
-  const decoratorData = JSON.parse(sessionStorage.getItem("decorator"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const decorator = JSON.parse(sessionStorage.getItem("decorator"));
 
   const handleLogout = async () => {
     sessionStorage.removeItem("decorator");
@@ -20,10 +20,10 @@ function Navbar() {
         </div>
       </Link>
 
-      {userData  && (
+      {user  && (
         <div className="box-login">
           <div className="name-login-one">
-            <p className="name-login">Bienvenue {userData.userData.firstname}, </p>
+            <p className="name-login">Bienvenue {user.userData.firstname}, </p>
           </div>
           <Link to="/espace-deco" className="home-link">
             Espace deco
@@ -34,12 +34,12 @@ function Navbar() {
         </div>
       )}
 
-      {decoratorData  && (
+      {decorator  && (
         <div className="box-login">
           <p className="name-login">
-            Bienvenue {decoratorData.userData.firstname},
+            Bienvenue {decorator.userData.firstname},
           </p>
-          <Link to="/espace-deco" className="home-link">
+          <Link to={`/dashboard/${decorator.userData.firstname}/projects`} className="home-link">
             Espace création
           </Link>
           <button className="btn-deco" onClick={handleLogout}>
@@ -48,7 +48,7 @@ function Navbar() {
         </div>
       )}
 
-      {!userData && !decoratorData && (
+      {!user && !decorator && (
         <div className="box-login">
   
           <Link to="/users/login" className="home-link-client">

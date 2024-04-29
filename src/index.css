@@ -110,6 +110,11 @@ svg {
     height: 583px;
   }
 
+  .eyes-password {
+    width: 20px;
+    height: 20px;
+  }
+
   .input-field {
     width: 161px;
     color: white;
@@ -128,11 +133,6 @@ svg {
     height: 362px;
     border-radius: 7px;
     background: rgb(0, 0, 0, 0.6);
-  }
-
-  .eyes-password {
-    border: none;
-    color: white;
   }
 
   .text-register {
@@ -244,17 +244,18 @@ svg {
     padding: 2%;
     border-radius: 0px 0px 10px 10px;
     transform: translateY(-73px);
-    /* margin-bottom: -112px; */
     background: rgb(82 75 75 / 46%);
     z-index: -1;
   }
 
   .container {
-    /* width: 356px; */
     display: flex;
     justify-content: center;
     flex-direction: column;
-    /* margin-top: 50px; */
+  }
+
+  .container-card {
+    height: 402px;
   }
 
   .img-card {
@@ -273,7 +274,7 @@ svg {
     margin-left: auto;
     background-color: black;
     z-index: 1;
-    transform: translate(-204px, -113px);
+    transform: translate(-2px, -110px);
     margin-right: 10px;
   }
 
@@ -282,29 +283,61 @@ svg {
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
-    /* transform: translateY(46px); */
   }
 
   .form-update {
     display: flex;
     flex-direction: column;
-    /* row-gap: 10px; */
   }
 
   .input-update {
     width: 283px;
     height: 27px;
-    background-color: #afa1a1;
+    padding-left: 10px;
+    background-color: #bba89f;
     border-radius: 11px;
     border: none;
+    color: white;
   }
 
+  .input-update::placeholder {
+    padding-right: 10px;
+  }
+
+  /* -----------COMMENTAIRE------------ */
+
   .input-comment {
-    width: 100%;
+    width: 77%;
     height: 27px;
+    padding-left: 10px;
     background-color: #afa1a1;
     border-radius: 11px;
     border: none;
+    margin-bottom: 10px;
+  }
+
+  .modal-comment {
+    margin-bottom: 34px;
+  }
+
+  .box-comment-content {
+    display: flex;
+    gap: 5px;
+  }
+
+  .comment-form {
+    display: flex;
+  }
+
+  .box-createAt {
+    display: flex;
+    gap: 14px;
+  }
+
+  .delete-comment {
+    border: none;
+    background: none;
+    font-size: 10px;
   }
 
   .input-update[type="text"]::placeholder {
@@ -383,7 +416,27 @@ svg {
 
   .box-one-comment {
     display: flex;
-    flex-direction: row;
+    gap: 16%;
+  }
+
+  .modal-comment {
+    margin-bottom: -10px;
+    border: none;
+    border-radius: 13px;
+    width: 33px;
+    font-style: italic;
+    color: gray;
+    width: 37%;
+  }
+
+  .black-bg {
+    width: 10%;
+    color: white;
+    background-color: black;
+  }
+
+  .gray-bg {
+    background-color: none;
   }
 
   /* -----------IMAGE DETAILS------------- */
@@ -462,6 +515,51 @@ svg {
   .text-sousDescription {
     color: black;
     margin-bottom: 200px;
+  }
+
+  .content-comment {
+    font-size: 9px;
+    font-style: italic;
+  }
+
+  .name-comment {
+    font-size: 9px;
+    font-style: italic;
+  }
+
+  .comment-list {
+    margin-top: 22px;
+    margin-bottom: 22px;
+  }
+
+  .box-createAt {
+    margin-right: auto;
+  }
+  .createAt {
+    font-size: 9px;
+    font-style: italic;
+    text-align: right;
+  }
+
+  .btn-project {
+    text-decoration: none;
+    height: 55px;
+    width: 158px;
+    /* border-radius: 5px; */
+    border: none;
+    background: #afa1a1;
+    color: white;
+    margin-left: auto;
+  }
+
+  .btn-project:hover{
+    background: black;
+  }
+
+  .grid-projectlist{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
   }
 
   /* Footer */
@@ -545,16 +643,24 @@ svg {
     font-size: 20px;
   }
 
+  .footer-explore-menu {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+
   .footer-explore {
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
     font-size: 18px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 
   .footer-about {
     display: flex;
     flex-direction: column;
     font-size: 26px;
-    gap: 16px;
+    gap: 10px;
   }
 }
 
@@ -614,6 +720,11 @@ svg {
 
   .login-page {
     height: 863px;
+  }
+
+  .eyes-password {
+    width: 30px;
+    height: 30px;
   }
 
   .form-user {
@@ -687,10 +798,14 @@ svg {
     font-size: 16px;
   }
   .container {
-    gap: 10px;
+    gap: 30px;
   }
   .link-card {
     height: 72%;
+  }
+
+  .btn-view {
+    transform: translate(-4px, -140px);
   }
   /* -----------IMAGE DETAILS------------- */
   /* .box-img-details{
@@ -698,8 +813,7 @@ svg {
   } */
 
   .input-update {
-    width: 100%;
-    height: 42px;
+    height: 33px;
     border-radius: 11px;
   }
 
@@ -725,17 +839,6 @@ svg {
       "footer-two"
       "footer-contact footer-four";
   }
-}
-
-.footer {
-  bottom: auto;
-  color: #f4f0f0;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: black;
-  padding: 30px 100px 30px 50px;
 }
 
 @media screen and (min-width: 1440px) {
@@ -840,18 +943,15 @@ svg {
     background-color: #bba89f;
   }
 
-  .name-comment {
-    font-size: 9px;
-  }
-  .content-comment {
-    font-size: 9px;
-  }
-
   .btn-delete {
     height: 40px;
     width: 90px;
     border-radius: 14px;
     font-size: 17px;
+  }
+
+  .container {
+    gap: 55px;
   }
 
   .section-details {
@@ -861,6 +961,10 @@ svg {
 
   .text-sousDescription {
     font-size: 20px;
+  }
+
+  .btn-view {
+    transform: translate(-2px, -64px);
   }
 
   /* Section Footer */
